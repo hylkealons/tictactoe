@@ -7,11 +7,16 @@ defmodule TicTacToe.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       preferred_cli_env: ["test.all": :test, dialyzer: :dev],
       aliases: aliases(),
       deps: deps()
     ]
   end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   def application do
     [extra_applications: [:logger]]

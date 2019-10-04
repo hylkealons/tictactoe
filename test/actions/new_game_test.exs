@@ -6,7 +6,7 @@ defmodule TicTacToe.Actions.NewGameTest do
   describe "call/1" do
     test "returns the expected response when called" do
       params = %{starter: :x}
-      assert NewGame.call(params) == {:error, :not_implemented}
+      assert NewGame.call(params) == {:ok, "test-id"}
     end
 
     test "when a invalid starter is given" do
