@@ -4,4 +4,11 @@ defmodule TicTacToe.Players.Player do
   """
 
   @type t :: :x | :o
+
+  @doc """
+  Returns the next players turn
+  """
+  @spec next(t) :: t
+  def next(:x), do: :o
+  def next(:o), do: :x
 end
