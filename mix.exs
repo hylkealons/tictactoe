@@ -16,6 +16,10 @@ defmodule TicTacToe.MixProject do
   end
 
   defp deps do
-    []
+    [
+      {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.1.2", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
+    ]
   end
 end
