@@ -19,7 +19,10 @@ defmodule TicTacToe.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger]]
+    [
+      mod: {TicTacToe, []},
+      extra_applications: [:logger]
+    ]
   end
 
   defp deps do
@@ -32,13 +35,14 @@ defmodule TicTacToe.MixProject do
 
   defp aliases do
     [
+      test: "test --no-start",
       "test.all": [
         # Check formatting
         "format --dry-run --check-formatted",
         # Check no compiler errors
         "compile --warnings-as-errors",
         # Check tests succeed
-        "test",
+        "test --no-start",
         # Check proper code
         "credo",
         # Check no security errors
