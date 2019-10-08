@@ -4,9 +4,12 @@ defmodule TicTacToe.Games.Game.State.Adapter do
   """
 
   alias TicTacToe.Players.Player
+  alias TicTacToe.Games.Game
 
   @doc """
   When a new game is started
   """
-  @callback start_game(Player.t()) :: {:ok, id :: any} | {:error, term}
+  @callback start_game(Player.t()) :: {:ok, Game.id()} | {:error, term}
+  @callback update_game(Game.t()) :: :ok
+  @callback get_game(Game.t()) :: {:ok, Game.id()} | {:error, term}
 end

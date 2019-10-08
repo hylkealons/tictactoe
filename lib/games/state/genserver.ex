@@ -24,6 +24,35 @@ defmodule TicTacToe.Games.Game.State.GenServer do
     {:ok, pid}
   end
 
+  @impl true
+  @spec update_game(Game.t()) :: :ok
+  def update_game(game) do
+    if game_exists?(game.id) do
+      GenServer.cast(game.id, {:update, game})
+    else
+      {:error, :not_found}
+    end
+  end
+
+  @impl true
+  @spec get_game(Game.id()) :: {:ok, pid} | {:error, term}
+  def get_game(game_pid) do
+    if game_exists?(game_pid) do
+      {:ok, GenServer.call(game_pid, :get)}
+    else
+      {:error, :not_found}
+    end
+  end
+
+  @spec game_exists?(Game.id()) :: boolean
+  defp game_exists?(game_pid) do
+    if is_pid(game_pid) && Process.alive?(game_pid) do
+      true
+    else
+      false
+    end
+  end
+
   # Server
 
   @impl true
@@ -33,4 +62,7 @@ defmodule TicTacToe.Games.Game.State.GenServer do
   @impl true
   @spec handle_cast({:update, Game.t()}, Game.t()) :: {:noreply, Game.t()}
   def handle_cast({:update, game}, _), do: {:noreply, game}
+
+  @impl true
+  def handle_call(:get, _, state), do: {:reply, state, state}
 end
