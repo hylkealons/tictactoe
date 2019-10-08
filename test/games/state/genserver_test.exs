@@ -1,8 +1,13 @@
 defmodule TicTacToe.Games.Game.State.GenServerTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
 
   alias TicTacToe.Games.Game.State.GenServer, as: GameServer
   alias TicTacToe.Games.Game.State.GenServer.Supervisor, as: GameSupervisor
+
+  setup do
+    {:ok, pid} = start_supervised(GameSupervisor)
+    %{supervisor: pid}
+  end
 
   describe "start_link/1" do
     test "starts the genserver" do
@@ -12,11 +17,6 @@ defmodule TicTacToe.Games.Game.State.GenServerTest do
   end
 
   describe "start_game/1" do
-    setup do
-      {:ok, pid} = GameSupervisor.start_link()
-      %{supervisor: pid}
-    end
-
     test "starts a new game in the supervisor", context do
       assert DynamicSupervisor.which_children(context.supervisor) == []
       {:ok, pid} = GameServer.start_game(:x)
@@ -40,7 +40,6 @@ defmodule TicTacToe.Games.Game.State.GenServerTest do
 
   describe "get_game/1" do
     setup do
-      {:ok, _} = GameSupervisor.start_link()
       {:ok, game_pid} = GameServer.start_game(:o)
       %{game_pid: game_pid}
     end
@@ -62,9 +61,8 @@ defmodule TicTacToe.Games.Game.State.GenServerTest do
 
   describe "update_game/1" do
     setup do
-      {:ok, supervisor_pid} = GameSupervisor.start_link()
       {:ok, game_pid} = GameServer.start_game(:x)
-      %{supervisor: supervisor_pid, game_pid: game_pid}
+      %{game_pid: game_pid}
     end
 
     test "updates the game in the state", context do
