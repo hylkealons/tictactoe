@@ -16,7 +16,7 @@ defmodule TicTacToe.Boards.BoardTest do
       {:ok, board} = Board.set(@empty_board, :x, 2, 2)
       {:ok, board} = Board.set(board, :x, 3, 2)
       assert elem(board, 4) == :x
-      assert elem(board, 6) == :x
+      assert elem(board, 7) == :x
     end
 
     test "cannot set the value twice" do

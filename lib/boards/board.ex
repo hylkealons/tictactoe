@@ -17,8 +17,10 @@ defmodule TicTacToe.Boards.Board do
 
   @spec set(t, Player.t(), row, column) :: {:ok, t} | {:error, term}
   def set(board, player, row, column) when row in [1, 2, 3] and column in [1, 2, 3] do
-    case elem(board, row * column) do
-      nil -> {:ok, put_elem(board, row * column, player)}
+    position = (row - 1) * 3 + (column - 1)
+
+    case elem(board, position) do
+      nil -> {:ok, put_elem(board, position, player)}
       _ -> {:error, :already_set}
     end
   end
