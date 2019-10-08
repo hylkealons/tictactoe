@@ -16,12 +16,12 @@ defmodule TicTacToe.Games.Game do
 
   defstruct ~w(id board current_player)a
 
-  @spec new(Player.t()) :: t
-  def new(start_player) do
+  @spec new(Player.t(), map) :: t
+  def new(start_player, opts \\ %{}) do
     %Game{
-      id: nil,
-      board: Board.new(),
-      current_player: start_player
+      id: Map.get(opts, :id),
+      board: Map.get(opts, :board) || Board.new(),
+      current_player: Map.get(opts, :current_player) || start_player
     }
   end
 end

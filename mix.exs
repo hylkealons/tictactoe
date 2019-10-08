@@ -29,7 +29,8 @@ defmodule TicTacToe.MixProject do
     [
       {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.1.2", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false},
+      {:uuid, "~> 1.1"}
     ]
   end
 

@@ -1,12 +1,18 @@
 defmodule TicTacToe.Actions.NewGameTest do
   use ExUnit.Case
 
+  alias TicTacToe.Games.Game.State.Ets
   alias TicTacToe.Actions.NewGame
 
   describe "call/1" do
+    setup do
+      Ets.init()
+      :ok
+    end
+
     test "returns the expected response when called" do
       params = %{starter: :x}
-      assert NewGame.call(params) == {:ok, "test-id"}
+      assert {:ok, _} = NewGame.call(params)
     end
 
     test "when a invalid starter is given" do
