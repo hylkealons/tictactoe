@@ -28,7 +28,7 @@ defmodule TicTacToe.Actions.MakeMoveTest do
       current_board = {:o, :o, nil, nil, nil, nil, nil, nil, nil}
       context.game |> Map.put(:board, current_board) |> Ets.update_game()
       params = %{player: :o, column: 3, row: 1, id: context.game.id}
-      assert MakeMove.call(params) == {:winner, {:o, :horizontal, :row1}}
+      assert MakeMove.call(params) == {:ok, {:winner, {:o, :horizontal, :row1}}}
     end
 
     test "when it's not the players turn", context do

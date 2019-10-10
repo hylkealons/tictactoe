@@ -10,6 +10,6 @@ defmodule TicTacToe.Games.Game.State.Adapter do
   When a new game is started
   """
   @callback start_game(Player.t()) :: {:ok, Game.id()} | {:error, term}
-  @callback update_game(Game.t()) :: :ok
-  @callback get_game(Game.t()) :: {:ok, Game.id()} | {:error, term}
+  @callback update_game(Game.t()) :: {:ok, Game.t()} | {:error, term}
+  @callback get_game(Game.id()) :: {:ok, Game.t()} | {:error, term}
 end

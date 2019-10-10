@@ -20,22 +20,23 @@ defmodule TicTacToe.Games.Game.State.GenServer do
     game = Game.new(start_player)
     child_spec = {__MODULE__, game}
     {:ok, pid} = DynamicSupervisor.start_child(GameServerSupervisor, child_spec)
-    GenServer.cast(pid, {:update, %{game | id: pid}})
+    GenServer.call(pid, {:update, %{game | id: pid}})
     {:ok, pid}
   end
 
   @impl true
-  @spec update_game(Game.t()) :: :ok
+  @spec update_game(Game.t()) :: {:ok, Game.t()}
   def update_game(game) do
     if game_exists?(game.id) do
-      GenServer.cast(game.id, {:update, game})
+      game = GenServer.call(game.id, {:update, game})
+      {:ok, game}
     else
       {:error, :not_found}
     end
   end
 
   @impl true
-  @spec get_game(Game.id()) :: {:ok, pid} | {:error, term}
+  @spec get_game(Game.id()) :: {:ok, Game.t()} | {:error, term}
   def get_game(game_pid) do
     if game_exists?(game_pid) do
       {:ok, GenServer.call(game_pid, :get)}
@@ -60,9 +61,8 @@ defmodule TicTacToe.Games.Game.State.GenServer do
   def init(game), do: {:ok, game}
 
   @impl true
-  @spec handle_cast({:update, Game.t()}, Game.t()) :: {:noreply, Game.t()}
-  def handle_cast({:update, game}, _), do: {:noreply, game}
+  def handle_call({:update, game}, _, _), do: {:reply, game, game}
 
   @impl true
-  def handle_call(:get, _, state), do: {:reply, state, state}
+  def handle_call(:get, _, game), do: {:reply, game, game}
 end

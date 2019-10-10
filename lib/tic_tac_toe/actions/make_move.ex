@@ -13,14 +13,14 @@ defmodule TicTacToe.Actions.MakeMove do
   @adapter Application.get_env(:tic_tac_toe, Game)[:adapter] || raise("Game adapter must be set")
 
   @type params :: %{
-          id: any,
-          player: :x | :o,
-          column: 1 | 2 | 3,
-          row: 1 | 2 | 3
+          id: Game.id(),
+          player: Player.t(),
+          column: Board.column(),
+          row: Board.row()
         }
 
   @impl true
-  @spec call(params) :: {:error, term}
+  @spec call(params) :: {:ok, Game.t() | {:winner, term}} | {:error, term}
   def call(params) do
     case validate_input(params) do
       :ok -> move(params.id, params.player, params.row, params.column)
@@ -39,7 +39,8 @@ defmodule TicTacToe.Actions.MakeMove do
     end
   end
 
-  @spec move(Game.id(), Player.t(), Board.row(), Board.column()) :: {:ok, Game.t()}
+  @spec move(Game.id(), Player.t(), Board.row(), Board.column()) ::
+          {:ok, Game.t() | {:winner, term}} | {:error, term}
   defp move(game_id, player, row, column) do
     with {:ok, game} <- @adapter.get_game(game_id),
          {:is_turn_player, true} <- {:is_turn_player, player == game.current_player},

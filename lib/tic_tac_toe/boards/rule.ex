@@ -24,12 +24,16 @@ defmodule TicTacToe.Boards.Rule do
   @doc """
   Returns the winner and how the game is won. Returns no_winner if the board is there is no outcome yet.
   """
-  @spec board_winner(Board.t()) :: {:winner, {Player.t(), win_type, win_reason}} | :no_winner
+  @spec board_winner(Board.t()) ::
+          {:ok, {:winner, {Player.t(), win_type, win_reason}}} | :no_winner
   def board_winner(board) do
     Enum.find_value(@winning_rules, :no_winner, fn {winning_rule, win_type, win_reason} ->
       case Enum.map(winning_rule, &elem(board, &1)) do
-        [player, player, player] when player != nil -> {:winner, {player, win_type, win_reason}}
-        _ -> nil
+        [player, player, player] when player != nil ->
+          {:ok, {:winner, {player, win_type, win_reason}}}
+
+        _ ->
+          nil
       end
     end)
   end

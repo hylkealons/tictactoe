@@ -21,14 +21,14 @@ defmodule TicTacToe.Boards.RuleTest do
 
       Enum.each(win_combinations, fn win_combination ->
         win_board = Enum.reduce(win_combination, @empty_board, &put_elem(&2, &1, :x))
-        assert {:winner, {:x, _, _}} = Rule.board_winner(win_board)
+        assert {:ok, {:winner, {:x, _, _}}} = Rule.board_winner(win_board)
       end)
     end
 
     test "returns the right win type and reason" do
       win_board = @empty_board |> put_elem(2, :x) |> put_elem(4, :x) |> put_elem(6, :x)
 
-      assert Rule.board_winner(win_board) == {:winner, {:x, :diagonal, :rightleft}}
+      assert Rule.board_winner(win_board) == {:ok, {:winner, {:x, :diagonal, :rightleft}}}
     end
 
     test "when there is no win" do
