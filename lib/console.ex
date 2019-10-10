@@ -1,5 +1,4 @@
 defmodule TicTacToeConsole do
-
   alias TicTacToe.Actions.{GetGame, MakeMove}
   alias TicTacToe.Games.Game
 
@@ -105,7 +104,7 @@ defmodule TicTacToeConsole do
   defp parse_1_2_3(row_or_column) do
     user_value = "Which #{row_or_column}? (1,2,3): " |> @io_module.gets() |> String.trim()
 
-    if(user_value in ["1", "2", "3"]) do
+    if user_value in ["1", "2", "3"] do
       String.to_integer(user_value)
     else
       @io_module.puts("Only 1, 2, or 3 are valid options. Try again.")
@@ -118,7 +117,7 @@ defmodule TicTacToeConsole do
 
     if start_player in ["o", "x"] do
       @io_module.puts("Player #{start_player} is starting.")
-      params = %{starter: String.to_atom(start_player)}
+      params = %{starter: String.to_existing_atom(start_player)}
       TicTacToe.Actions.NewGame.call(params)
     else
       @io_module.puts("Only x or o is a valid starting player.")
