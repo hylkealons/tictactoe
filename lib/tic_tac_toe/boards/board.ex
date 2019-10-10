@@ -5,8 +5,8 @@ defmodule TicTacToe.Boards.Board do
 
   alias TicTacToe.Players.Player
 
-  @type column :: Player.t() | nil
-  @type row :: pos_integer
+  @type column :: integer | nil
+  @type row :: integer
   @type t :: {column, column, column, column, column, column, column, column, column}
 
   @doc """

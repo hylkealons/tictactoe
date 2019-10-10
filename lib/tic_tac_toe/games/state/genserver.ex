@@ -25,7 +25,7 @@ defmodule TicTacToe.Games.Game.State.GenServer do
   end
 
   @impl true
-  @spec update_game(Game.t()) :: {:ok, Game.t()}
+  @spec update_game(Game.t()) :: {:ok, Game.t()} | {:error, term}
   def update_game(game) do
     if game_exists?(game.id) do
       game = GenServer.call(game.id, {:update, game})
