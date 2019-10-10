@@ -14,7 +14,7 @@ defmodule TicTacToe.Games.Game.State.Ets do
   def start_game(player) do
     game = Game.new(player, %{id: uuid4()})
     :ets.insert(:games, {game.id, game})
-    {:ok, game}
+    {:ok, game.id}
   end
 
   @impl true

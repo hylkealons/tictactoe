@@ -17,7 +17,8 @@ defmodule TicTacToe.Games.Game.State.EtsTest do
     end
 
     test "starts a game and returns it" do
-      assert {ok, %Game{}} = Ets.start_game(:x)
+      assert {ok, id} = Ets.start_game(:x)
+      assert is_binary(id)
     end
   end
 
@@ -28,9 +29,10 @@ defmodule TicTacToe.Games.Game.State.EtsTest do
     end
 
     test "updates a game and returns it" do
-      {:ok, game} = Ets.start_game(:x)
+      {:ok, game_id} = Ets.start_game(:x)
+      {:ok, game} = Ets.get_game(game_id)
       game = Map.put(game, :current_player, :o)
-      assert Ets.update_game(game) == {:ok, game}
+      assert {:ok, %Game{current_player: :o}} = Ets.update_game(game)
     end
   end
 
@@ -41,9 +43,9 @@ defmodule TicTacToe.Games.Game.State.EtsTest do
     end
 
     test "gets a game by the identifier" do
-      {:ok, %Game{id: id} = game} = Ets.start_game(:x)
+      {:ok, id} = Ets.start_game(:x)
 
-      assert Ets.get_game(id) == {:ok, game}
+      assert {:ok, %Game{id: ^id}} = Ets.get_game(id)
     end
 
     test "when a game does not exist" do

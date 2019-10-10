@@ -8,7 +8,8 @@ defmodule TicTacToe.Actions.MakeMoveTest do
   describe "call/1" do
     setup do
       Ets.init()
-      {:ok, game} = Ets.start_game(:o)
+      {:ok, game_id} = Ets.start_game(:o)
+      {:ok, game} = Ets.get_game(game_id)
       valid_params = %{player: :o, column: 3, row: 1, id: game.id}
 
       %{valid_params: valid_params, game: game}
