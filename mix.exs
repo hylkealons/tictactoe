@@ -20,7 +20,7 @@ defmodule TicTacToe.MixProject do
 
   def application do
     [
-      mod: {TicTacToe, []},
+      mod: {TicTacToe.Application, []},
       extra_applications: [:logger]
     ]
   end

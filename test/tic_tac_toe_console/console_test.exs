@@ -1,7 +1,7 @@
-defmodule TicTacToeConsole.ConsoleTest do
+defmodule TicTacToeConsoleTest do
   use ExUnit.Case
 
-  alias TicTacToeConsole.Console
+  alias TicTacToeConsole, as: Console
   alias TicTacToe.Games.Game.State.Ets
 
   describe "play/0" do

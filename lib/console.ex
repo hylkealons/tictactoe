@@ -1,4 +1,4 @@
-defmodule TicTacToeConsole.Console do
+defmodule TicTacToeConsole do
 
   alias TicTacToe.Actions.{GetGame, MakeMove}
   alias TicTacToe.Games.Game
