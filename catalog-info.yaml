@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: tictactoe
+  annotations:
+    github.com/project-slug: hylkealons/tictactoe
+spec:
+  type: other
+  lifecycle: unknown
+  owner: checkout
